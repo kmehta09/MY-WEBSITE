@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lulu's Eco App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fefce8;
+            margin: 0;
+            padding: 16px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .rtl { direction: rtl; text-align: right; }
+        .ltr { direction: ltr; text-align: left; }
+        
+        .language-toggle {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #facc15, #16a34a);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .section-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 2px solid #facc15;
+        }
+        
+        .icon-container {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fef9c3;
+            border-radius: 16px;
+            margin: 0 auto 16px auto;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            color: #16a34a;
+        }
+        
+        .feature-title {
+            color: #166534;
+            margin: 8px 0;
+            font-size: 1.4rem;
+        }
+        
+        .feature-description {
+            color: #4b5563;
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .back-button {
+            width: 100%;
+            margin-bottom: 16px;
+            background-color: #facc15;
+            color: #166534;
+        }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 2px solid #facc15;
+        }
+        
+        .progress-bar {
+            background-color: #fef9c3;
+            border-radius: 8px;
+            height: 12px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background-color: #16a34a;
+            height: 100%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="mainContainer" class="container ltr">
+        <!-- Language Toggle -->
+        <div class="language-toggle">
+            <button id="langToggle" class="button" onclick="toggleLanguage()">عربي</button>
+        </div>
+
+        <!-- Home Screen -->
+        <div id="homeScreen" class="screen active">
+            <div class="section-header">
+                <p data-en="Track, Recycle, and Earn Rewards" data-ar="تتبع وأعد التدوير واكسب المكافآت">Track, Recycle, and Earn Rewards</p>
+            </div>
+
+            <!-- QR Code Feature -->
+            <div class="section-card" onclick="showScreen('qrScreen')">
+                <div class="icon-container">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3z"/>
+                        <path d="M15 15h2v2h-2zM19 15h2v2h-2zM15 19h6v2h-6z"/>
+                    </svg>
+                </div>
+                <h2 class="feature-title" data-en="My QR Code" data-ar="رمز QR الخاص بي">My QR Code</h2>
+                <p class="feature-description" data-en="Scan at checkout to track purchases" data-ar="امسح عند الدفع لتتبع المشتريات">Scan at checkout to track purchases</p>
+            </div>
+
+            <!-- Virtual Fridge Feature -->
+            <div class="section-card" onclick="showScreen('fridgeScreen')">
+                <div class="icon-container">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="2" width="16" height="20" rx="2"/>
+                        <path d="M4 12h16"/>
+                        <path d="M17 7v2"/>
+                        <path d="M17 15v2"/>
+                    </svg>
+                </div>
+                <h2 class="feature-title" data-en="Virtual Fridge" data-ar="الثلاجة الافتراضية">Virtual Fridge</h2>
+                <p class="feature-description" data-en="Track expiry dates and reduce food waste" data-ar="تتبع تواريخ انتهاء الصلاحية وقلل من هدر الطعام">Track expiry dates and reduce food waste</p>
+            </div>
+
+            <!-- Recycling Feature -->
+            <div class="section-card" onclick="showScreen('recycleScreen')">
+                <div class="icon-container">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 12c0-4.418 3.582-8 8-8s8 3.582 8 8"/>
+                        <path d="M20 12l-4-4m4 4l-4 4M12 20c-4.418 0-8-3.582-8-8"/>
+                        <path d="M4 12l4-4m-4 4l4 4"/>
+                    </svg>
+                </div>
+                <h2 class="feature-title" data-en="Waste Recycling" data-ar="إعادة تدوير النفايات">Waste Recycling</h2>
+                <p class="feature-description" data-en="Earn rewards for recycling waste" data-ar="اكسب مكافآت مقابل إعادة تدوير النفايات">Earn rewards for recycling waste</p>
+            </div>
+        </div>
+
+        <!-- QR Screen -->
+        <div id="qrScreen" class="screen">
+            <button class="button back-button" onclick="showScreen('homeScreen')" data-en="← Back" data-ar="رجوع →">← Back</button>
+            <div class="card">
+                <h2 class="feature-title" data-en="My QR Code" data-ar="رمز QR الخاص بي">My QR Code</h2>
+                <svg width="200" height="200" viewBox="0 0 200 200" style="margin: 20px auto; display: block;">
+                    <rect width="200" height="200" fill="white"/>
+                    <rect x="20" y="20" width="40" height="40" fill="black"/>
+                    <rect x="25" y="25" width="30" height="30" fill="white"/>
+                    <rect x="30" y="30" width="20" height="20" fill="black"/>
+                    <rect x="140" y="20" width="40" height="40" fill="black"/>
+                    <rect x="145" y="25" width="30" height="30" fill="white"/>
+                    <rect x="150" y="30" width="20" height="20" fill="black"/>
+                    <rect x="20" y="140" width="40" height="40" fill="black"/>
+                    <rect x="25" y="145" width="30" height="30" fill="white"/>
+                    <rect x="30" y="150" width="20" height="20" fill="black"/>
+                    <rect x="80" y="80" width="40" height="40" fill="black"/>
+                </svg>
+                <p style="text-align: center;" data-en="User ID: LU12345" data-ar="معرف المستخدم: LU12345">User ID: LU12345</p>
+            </div>
+        </div>
+
+        <!-- Fridge Screen -->
+        <div id="fridgeScreen" class="screen">
+            <button class="button back-button" onclick="showScreen('homeScreen')" data-en="← Back" data-ar="رجوع →">← Back</button>
+            <div class="card">
+                <h2 class="feature-title" data-en="Virtual Fridge" data-ar="الثلاجة الافتراضية">Virtual Fridge</h2>
+                <div style="text-align: center;">
+                    <img src="/api/placeholder/80/80?text=Milk" alt="Milk" style="margin: 10px;">
+                    <h3 data-en="Fresh Milk" data-ar="حليب طازج">Fresh Milk</h3>
+                    <p data-en="Expires in 5 days" data-ar="ينتهي في 5 أيام">Expires in 5 days</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recycle Screen -->
+        <div id="recycleScreen" class="screen">
+            <button class="button back-button" onclick="showScreen('homeScreen')" data-en="← Back" data-ar="رجوع →">← Back</button>
+            <div class="card">
+                <h2 class="feature-title" data-en="Waste Recycling" data-ar="إعادة تدوير النفايات">Waste Recycling</h2>
+                <button class="button" style="margin-bottom: 20px;" data-en="Scan QR to Record Waste" data-ar="مسح رمز QR لتسجيل النفايات">Scan QR to Record Waste</button>
+                
+                <div>
+                    <p data-en="Waste Recycled" data-ar="النفايات المعاد تدويرها">Waste Recycled</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%;"></div>
+                    </div>
+                    <p>25kg</p>
+                    
+                    <p data-en="CO2 Saved" data-ar="CO2 الموفر">CO2 Saved</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%;"></div>
+                    </div>
+                    <p>12kg</p>
+                    
+                    <p data-en="Cashback Earned" data-ar="النقود المستردة">Cashback Earned</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%;"></div>
+                    </div>
+                    <p>AED 50</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            const container = document.getElementById('mainContainer');
+            const langToggle = document.getElementById('langToggle');
+            
+            if (currentLang === 'ar') {
+                container.classList.remove('ltr');
+                container.classList.add('rtl');
+                langToggle.textContent = 'English';
+            } else {
+                container.classList.remove('rtl');
+                container.classList.add('ltr');
+                langToggle.textContent = 'عربي';
+            }
+
+            document.querySelectorAll('[data-en]').forEach(element => {
+                element.textContent = element.getAttribute(`data-${currentLang}`);
+            });
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
